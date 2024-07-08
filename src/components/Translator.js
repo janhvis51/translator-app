@@ -5,8 +5,8 @@ import{ useState } from "react";
   const [fromLanguage, setFromLanguage] = useState('en-GB');
   const [toLanguage, setToLanguage] = useState('hi-IN');
   const [fromText, setFromText] = useState('');
-   const [toText, setToText] = useState('');
-    const handleTranslate = () =>{
+  const [toText, setToText] = useState('');
+  const handleTranslate = () =>{
       let url = `https://api.mymemory.translated.net/get?q=${fromText}&langpair=${fromLanguage}|${toLanguage}`;
       fetch(url).then((res) => res.json()).then((data) =>{
         setToText(data.responseData.translatedText);
@@ -16,8 +16,9 @@ import{ useState } from "react";
       <>
        <div className="wrapper">
         <div className = "text-input">
-           <textarea className = "from-text" name = "from" id = "from" placeholder = "Enter Text"></textarea>
-           <textarea className = "to-text" name = "to" id = "to" readOnly ></textarea>
+        <textarea placeholder="Enter Text" className="from-input" value={ fromText } onChange={ (e) => setFromText(e.target.value) }></textarea>          
+        <textarea className= "to-input"  value={ toText } onChange={ (e) => setToText(e.target.value) }></textarea>          
+
       </div>
       <ul className ="controls">
         <li className= "row from">
@@ -25,7 +26,7 @@ import{ useState } from "react";
              <i id ="from" class="fa-solid fa-volume-high"></i>
              <i id = "from" class="fa-solid fa-copy"></i>
              </div>
-             <select>
+             <select value={ fromLanguage }  className="from-language" onChange={ (e) => setFromLanguage(e.target.value) }>
               {
                Object.entries(languages).map(([code,name]) =>(
                 <option key={code} value={code}>{name}</option>
@@ -40,7 +41,7 @@ import{ useState } from "react";
         </li>
         <li className = "row to">
          
-           <select>
+        <select value={ toLanguage } className="to-language" onChange={ (e) => setToLanguage(e.target.value) }>
            {
                Object.entries(languages).map(([code,name]) =>(
                 <option key={code} value={code}>{name}</option>
